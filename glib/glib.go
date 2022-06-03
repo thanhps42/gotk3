@@ -355,6 +355,7 @@ func IdleAddPriority(priority Priority, f interface{}) SourceHandle {
 	return idleAdd(priority, f)
 }
 
+//go:nosplit
 func idleAdd(priority Priority, f interface{}) SourceHandle {
 	fs := closure.NewIdleFuncStack(f, 2)
 	id := C.gpointer(callback.Assign(fs))
