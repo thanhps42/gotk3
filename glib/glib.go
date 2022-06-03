@@ -356,6 +356,7 @@ func IdleAddPriority(priority Priority, f interface{}) SourceHandle {
 }
 
 //go:nosplit
+//go:nocheckptr
 func idleAdd(priority Priority, f interface{}) SourceHandle {
 	fs := closure.NewIdleFuncStack(f, 2)
 	id := C.gpointer(callback.Assign(fs))
@@ -391,6 +392,8 @@ func TimeoutSecondsAddPriority(seconds uint, priority Priority, f interface{}) S
 	return timeoutAdd(seconds, true, priority, f)
 }
 
+//go:nosplit
+//go:nocheckptr
 func timeoutAdd(time uint, sec bool, priority Priority, f interface{}) SourceHandle {
 	fs := closure.NewIdleFuncStack(f, 2)
 	id := C.gpointer(callback.Assign(fs))
